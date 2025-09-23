@@ -22,13 +22,45 @@
   <!-- main - todoList -->
   <main>
     <!-- progress bar -->
-    <div>
-
+    <div class="progress-bar-main m-3 rounded-3 p-3">
+      <!-- progress bar - title -->
+      <div class="mb-4">
+        <h2 class="funnel-display-bold text-center">Preogress bar by group</h2>
+      </div>
+      <!-- progress bar - bars area -->
+      <div>
+        <!-- group 1 -->
+        <div class="progress mb-3">
+          <div class="progress-bar" style="width: 10%"></div>
+        </div>
+        <!-- group 2 -->
+        <div class="progress mb-3">
+          <div class="progress-bar" style="width: 10%"></div>
+        </div>
+        <!-- group 3 -->
+        <div class="progress mb-3">
+          <div class="progress-bar" style="width: 10%"></div>
+        </div>
+        <!-- group 4 -->
+        <div class="progress mb-3">
+          <div class="progress-bar" style="width: 10%"></div>
+        </div>
+        <!-- group 5 -->
+        <div class="progress">
+          <div class="progress-bar" style="width: 10%"></div>
+        </div>
+      </div>
     </div>
     
     <!-- check list -->
     <div>
-      
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="checkDefault">
+        <label class="form-check-label" for="checkDefault">
+          item 1
+        </label>
+        <button type="button" class="btn"><i class="bi bi-trash3"></i></button>
+      </div>
     </div>
   </main>
 
@@ -40,11 +72,11 @@
         <button type="button" class="btn btn-outline-secondary"><i class="bi bi-plus-circle-dotted"></i></button>
         <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false"><span class="visually-hidden">Toggle Dropdown</span></button>
         <ul class="dropdown-menu dropdown-menu-end bg-secondary">
-          <li class="dropdown-item">Grupo 1</li>
-          <li class="dropdown-item">Grupo 2</li>
-          <li class="dropdown-item">Grupo 3</li>
-          <li class="dropdown-item">Grupo 4</li>
-          <li class="dropdown-item">Grupo 5</li>
+          <li class="dropdown-item" onclick="changeGruop(1)">Grupo 1</li>
+          <li class="dropdown-item" onclick="changeGruop(2)">Grupo 2</li>
+          <li class="dropdown-item" onclick="changeGruop(3)">Grupo 3</li>
+          <li class="dropdown-item" onclick="changeGruop(4)">Grupo 4</li>
+          <li class="dropdown-item" onclick="changeGruop(5)">Grupo 5</li>
         </ul>
       </div>
     </form>
