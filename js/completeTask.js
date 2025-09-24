@@ -4,9 +4,11 @@ let countCompletForGroup = [0, 0, 0, 0, 0]
 // functions
 // updatebars
 function updateBars(group) {
+  // barras de progresso
   const completeBars = document.querySelectorAll('.progress-bar')
   let index
 
+  // index
   switch (group) {
     case 'group1': index = 0; break
     case 'group2': index = 1; break
@@ -15,6 +17,7 @@ function updateBars(group) {
     case 'group5': index = 4; break
   }
 
+  // 
   const totalItens = document.querySelectorAll(`.${group}`).length
   const completed = countCompletForGroup[index]
 
@@ -22,6 +25,23 @@ function updateBars(group) {
   completeBars[index].style.width = percent + "%"
 }
 
+
+
+// remove item
+function removePointInTask(group) {
+  let index
+  // by group
+  switch (group) {
+    case 'group1': index = 0; break
+    case 'group2': index = 1; break
+    case 'group3': index = 2; break
+    case 'group4': index = 3; break
+    case 'group5': index = 4; break
+  }
+
+  // remove in count var
+  countCompletForGroup[index] --
+}
 
 
 

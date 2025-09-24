@@ -21,7 +21,7 @@ const checkListArea = document.getElementById('checklist')
 
 
 // remove task - mmodal initial
-function removeTaskCheck(itemId) {
+function removeTaskCheck(itemId, group, checkbox) {
   // se existir algim modal anterior ele apaga
   const oldModal = document.getElementById('dynamicModal')
   if (oldModal) oldModal.remove()
@@ -51,11 +51,28 @@ function removeTaskCheck(itemId) {
   const modalEl = document.getElementById('dynamicModal')
   const modal = new bootstrap.Modal(modalEl)
 
-  // adiciona evento no botão confirmar
+  // adiciona evento no botão apagar
   modalEl.querySelector('#RemoveItemBtn').addEventListener('click', () => {
+    // remove o checklist
     modal.hide()
 
+    // verificar se estava marcado ou nn o checkbox
+    const checkboxitem = document.getElementById(checkbox)
+    if (checkboxitem && checkboxitem.checked) {
+      removePointInTask(group)
+    }
 
+    // remove o elmento do checklist
+    const elmentCheckList = document.getElementById(`${itemId}`)
+    if (elmentCheckList) {
+      elmentCheckList.remove()
+      // vvisualElement is unique item ??
+
+    }
+
+    checkHasIten()
+    updateBars(group)
+    hasContent()
   })
 
   // abre o modal
@@ -86,17 +103,19 @@ function addItem() {
   }
 
   // criando elemento
-  const newItem = document.createElement(`div`)
+  const newItem = document.createElement("div");
+  newItem.className = "form-check d-flex justify-content-between align-items-center";
+  newItem.id = `itemId-${idCount}`;
   newItem.innerHTML = `
-    <div class="form-check d-flex justify-content-between align-items-center" id='itemId-${idCount}'>
-      <label class="form-check-label mx-4" for="checkDefault">
-        <input class="form-check-input" type="checkbox" onclick="completeTask(this, '${groups[actualGroup]}')">
-        ${inputText}
-      </label>
-      <div class="d-flex align-items-center gap-1">
-        <div class="color-group ${groups[actualGroup]}"></div>
-        <button type="button" class="btn" onclick="removeTaskCheck('itemId-${idCount}')"><i class="bi bi-trash3"></i></button>
-      </div>
+    <label class="form-check-label mx-4" for="checkDefault">
+      <input class="form-check-input" id="checkbox-${idCount}" type="checkbox" onclick="completeTask(this, '${groups[actualGroup]}')">
+      ${safeText}
+    </label>
+    <div class="d-flex align-items-center gap-1">
+      <div class="color-group ${groups[actualGroup]}"></div>
+      <button type="button" class="btn" onclick="removeTaskCheck('itemId-${idCount}', '${groups[actualGroup]}', 'checkbox-${idCount}')">
+        <i class="bi bi-trash3"></i>
+      </button>
     </div>
   `
 

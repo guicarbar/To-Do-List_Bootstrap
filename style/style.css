@@ -30,17 +30,10 @@
 :root {
   /* Paleta colorida */
   --color-red: #FF4245;
-  --color-orange: #FF922F;
   --color-yellow: #FFEA00;
   --color-green: #30D158;
-  --color-teal: #00DAC3;
-  --color-cyan: #00D2E0;
-  --color-light-blue: #3CD3FE;
   --color-blue: #0091FF;
-  --color-indigo: #6B5DFF;
   --color-purple: #DB52F2;
-  --color-pink: #FF5F9F;
-  --color-brown: #B78266;
 
   /* Paleta de cinza */
   --gray-100: #8E8E93;
