@@ -2,32 +2,26 @@
 let countCompletForGroup = [0, 0, 0, 0, 0]
 
 // functions
-// calc 
-
 // updatebars
 function updateBars(group) {
-  // bars
   const completeBars = document.querySelectorAll('.progress-bar')
-  const elementW
+  let index
 
   switch (group) {
-      case 'group1':
-        elementW = completeBars[0].offsetWidth
-        completeBars[0].style.width = elementW + 
-        break
-      case 'group2':
-        elementW = completeBars[1].offsetWidth
-        break
-      case 'group3':
-        elementW = completeBars[2].offsetWidth
-        break
-      case 'group4':
-        elementW = completeBars[3].offsetWidth
-        break
-      case 'group5':
-        elementW = completeBars[4].offsetWidth
-        break
+    case 'group1': index = 0; break
+    case 'group2': index = 1; break
+    case 'group3': index = 2; break
+    case 'group4': index = 3; break
+    case 'group5': index = 4; break
+  }
+
+  const totalItens = document.querySelectorAll(`.${group}`).length
+  const completed = countCompletForGroup[index]
+
+  const percent = totalItens > 0 ? (completed / totalItens) * 100 : 0
+  completeBars[index].style.width = percent + "%"
 }
+
 
 
 

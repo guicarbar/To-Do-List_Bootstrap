@@ -125,23 +125,23 @@ h2 {
 }
 
 
-.progress:nth-child(1) > div {
+.progress:nth-child(2) > div {
   background-color: var(--color-blue);
 }
 
-.progress:nth-child(2) > div {
+.progress:nth-child(3) > div {
   background-color: var(--color-red);
 }
 
-.progress:nth-child(3) > div {
+.progress:nth-child(4) > div {
   background-color: var(--color-purple);
 }
 
-.progress:nth-child(4) > div {
+.progress:nth-child(5) > div {
   background-color: var(--color-green);
 }
 
-.progress:nth-child(5) > div {
+.progress:nth-child(6) > div {
   background-color: var(--color-yellow);
 }
 
@@ -173,4 +173,23 @@ h2 {
 }
 .group5 {
   background-color: var(--color-yellow);
+}
+
+
+
+
+.modal-content {
+  background-color: var(--gray-300);
+}
+
+.modal-footer > button:nth-child(1) {
+  color: var(--white);
+}
+
+.btn-close {
+  background-color: var(--white);
+}
+
+.modal-header, .modal-footer {
+  border: none;
 }

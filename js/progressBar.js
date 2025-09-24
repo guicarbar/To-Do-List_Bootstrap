@@ -63,7 +63,7 @@ function checkHasIten() {
   // display for <> 0 itens
   positionSplited.notNulls.forEach(num => {
     if(arrayProgressBar[num]) {
-      arrayProgressBar[num].style.display = "block"
+      arrayProgressBar[num].style.display = "flex"
     }
   })
 }

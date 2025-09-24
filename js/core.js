@@ -18,9 +18,56 @@ function changeGruop(group) {
 // get checklist area
 const checkListArea = document.getElementById('checklist')
 
+
+
+// remove task - mmodal initial
+function removeTaskCheck(itemId) {
+  // se existir algim modal anterior ele apaga
+  const oldModal = document.getElementById('dynamicModal')
+  if (oldModal) oldModal.remove()
+
+  // cria modal dinamicamente com o click
+  const modalHtml = `
+  <div class="modal fade" id="dynamicModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Quer apagar esse item ?</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary" id="RemoveItemBtn">Apagar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  `
+
+  // adiciona no body
+  document.body.insertAdjacentHTML('beforeend', modalHtml)
+
+  // pega o modal criado
+  const modalEl = document.getElementById('dynamicModal')
+  const modal = new bootstrap.Modal(modalEl)
+
+  // adiciona evento no botão confirmar
+  modalEl.querySelector('#RemoveItemBtn').addEventListener('click', () => {
+    modal.hide()
+
+
+  })
+
+  // abre o modal
+  modal.show()
+}
+
+
+
+
 // add item 
 function addItem() {
-  idCount = idCount + 1
+  idCount ++
   // get text
   const inputText = input.value.trim()
   // safe text - sanitizar
@@ -41,14 +88,14 @@ function addItem() {
   // criando elemento
   const newItem = document.createElement(`div`)
   newItem.innerHTML = `
-    <div class="form-check d-flex justify-content-between align-items-center" id='${'itemId-' + idCount}'>
+    <div class="form-check d-flex justify-content-between align-items-center" id='itemId-${idCount}'>
       <label class="form-check-label mx-4" for="checkDefault">
-        <input class="form-check-input" type="checkbox" onclick="completeTask(this, ${groups[actualGroup]})">
+        <input class="form-check-input" type="checkbox" onclick="completeTask(this, '${groups[actualGroup]}')">
         ${inputText}
       </label>
       <div class="d-flex align-items-center gap-1">
         <div class="color-group ${groups[actualGroup]}"></div>
-        <button type="button" class="btn"><i class="bi bi-trash3"></i></button>
+        <button type="button" class="btn" onclick="removeTaskCheck('itemId-${idCount}')"><i class="bi bi-trash3"></i></button>
       </div>
     </div>
   `
@@ -60,6 +107,11 @@ function addItem() {
   input.value = ""
   input.focus()
   hasContent()
+
+  // att bars
+  checkHasIten()
+  // update bars
+  updateBars(groups[actualGroup])
 }
 
 
