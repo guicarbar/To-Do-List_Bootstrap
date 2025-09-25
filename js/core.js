@@ -1,109 +1,101 @@
-// vars
-// group vars - classes
+// ==================== VARIABLES ====================
+// Group classes
 const groups = ['group1', 'group2', 'group3', 'group4', 'group5']
-// group atual
+// Current group index
 let actualGroup = 0
-// input listener var
-const input = document.getElementById(`input-item`)
-// id count
+// Input element listener
+const input = document.getElementById('input-item')
+// ID counter for checklist items
 let idCount = 0
-
-// functions
-// change group 
-function changeGruop(group) {
-  actualGroup = group - 1
-  console.log(`Os itens serão adcionados no grupo: ${groups[actualGroup]}`)
-}
-
-// get checklist area
+// Checklist container
 const checkListArea = document.getElementById('checklist')
 
 
+// ==================== FUNCTIONS ====================
+// ---------- Change Group ----------
+function changeGruop(group) {
+  actualGroup = group - 1
+  console.log(`Items will be added to group: ${groups[actualGroup]}`)
+}
 
-// remove task - mmodal initial
+// ---------- Remove Task (with dynamic modal) ----------
 function removeTaskCheck(itemId, group, checkbox) {
-  // se existir algim modal anterior ele apaga
+  // Remove previous modal if exists
   const oldModal = document.getElementById('dynamicModal')
   if (oldModal) oldModal.remove()
 
-  // cria modal dinamicamente com o click
+  // Create dynamic modal HTML
   const modalHtml = `
   <div class="modal fade" id="dynamicModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Quer apagar esse item?</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+          <h5 class="modal-title">Do you want to delete this item?</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn" data-bs-dismiss="modal">Cancelar</button>
-          <button type="button" class="btn btn-primary" id="RemoveItemBtn">Apagar</button>
+          <button type="button" class="btn" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary" id="RemoveItemBtn">Delete</button>
         </div>
       </div>
     </div>
   </div>
   `
 
-  // adiciona no body
+  // Insert modal into body
   document.body.insertAdjacentHTML('beforeend', modalHtml)
 
-  // pega o modal criado
+  // Get modal element and initialize Bootstrap modal
   const modalEl = document.getElementById('dynamicModal')
   const modal = new bootstrap.Modal(modalEl)
 
-  // adiciona evento no botão apagar
+  // Delete button event
   modalEl.querySelector('#RemoveItemBtn').addEventListener('click', () => {
-    // remove o checklist
     modal.hide()
 
-    // verificar se estava marcado ou nn o checkbox
-    const checkboxitem = document.getElementById(checkbox)
+    // Check if checkbox was checked
+    const checkboxitem = document.getElementById(checkbox);
     if (checkboxitem && checkboxitem.checked) {
       removePointInTask(group)
     }
 
-    // remove o elmento do checklist
-    const elmentCheckList = document.getElementById(`${itemId}`)
-    if (elmentCheckList) {
-      elmentCheckList.remove()
-    }
+    // Remove checklist element
+    const elmentCheckList = document.getElementById(itemId);
+    if (elmentCheckList) elmentCheckList.remove();
 
     checkHasIten()
     updateBars(group)
     hasContent()
-  })
+  });
 
-  // abre o modal
+  // Show modal
   modal.show()
 }
 
-
-
-
-// add item 
+// ---------- Add Item ----------
 function addItem() {
-  idCount ++
-  // get text
+  idCount++
+
+  // Get input text and sanitize
   const inputText = input.value.trim()
-  // safe text - sanitizar
   const safeText = DOMPurify.sanitize(inputText)
 
-  // cria um elemento temporario para extrair o texto visivel
+  // Extract visible text
   const tempDiv = document.createElement('div')
   tempDiv.innerHTML = safeText
   const visibleText = tempDiv.textContent.trim()
 
-  // se não houver texto visivel, nao adiciona
+  // Return if no visible text
   if (!visibleText) {
     input.value = ""
     input.focus()
-    return 
+    return
   }
 
-  // criando elemento
+  // Create checklist item element
   const newItem = document.createElement("div");
   newItem.className = "form-check d-flex justify-content-between align-items-center";
-  newItem.id = `itemId-${idCount}`;
+  newItem.id = `itemId-${idCount}`
   newItem.innerHTML = `
     <label class="form-check-label mx-4" for="checkDefault">
       <input class="form-check-input" id="checkbox-${idCount}" type="checkbox" onclick="completeTask(this, '${groups[actualGroup]}')">
@@ -117,44 +109,37 @@ function addItem() {
     </div>
   `
 
-  // coloando item no html
-  checkListArea.appendChild(newItem)
+  // Append item to checklist
+  checkListArea.appendChild(newItem);
 
-  // resetando o valo do input apos ser adcionado
+  // Reset input
   input.value = ""
   input.focus()
   hasContent()
 
-  // att bars
+  // Update progress bars
   checkHasIten()
-  // update bars
   updateBars(groups[actualGroup])
 }
 
-
-
-// tem conteudo na checklist
+// ---------- Checklist Content Handling ----------
 function hasContent() {
-  // create visual element
   const hasContent = document.createElement("p")
   hasContent.className = "text-center"
   hasContent.id = "visualElement"
-  hasContent.textContent = "Seu item irá aparecer aqui assim que for adicionado."
+  hasContent.textContent = "Your item will appear here once added."
 
-  // Verifica se já existe o item
+  // Check if checklist has items
   if (checkListArea.innerHTML.trim().length > 0) {
-    // se o cheklist teiver dados
     const visual = document.getElementById("visualElement")
     if (visual) visual.remove()
   } else {
-    // se o checklist estiver vazio
     checkListArea.appendChild(hasContent)
   }
 }
 
-
-
-// event listener in enter input
+// ==================== EVENT LISTENERS ====================
+// Add item on Enter key
 input.addEventListener("keydown", (Event) => {
   if (Event.key === 'Enter') {
     Event.preventDefault()
@@ -162,129 +147,89 @@ input.addEventListener("keydown", (Event) => {
   }
 })
 
-
-
-// initial check itens
+// Initial setup on DOMContentLoaded
 document.addEventListener("DOMContentLoaded", () => {
   checkHasIten()
   hasContent()
 })
 
-
-
-// check all itens in checklist
+// ---------- Check / Uncheck All Items ----------
 function checkAll() {
-  // checkbox-${idCount}
-  const checkBox = document.getElementById('checkAllItem')
+  const checkBox = document.getElementById('checkAllItem');
   let i = 0
 
-  // marca todos
+  // Check all items
   if (checkBox.checked === true) {
     while (i <= idCount) {
-      const checkBoxItem = document.getElementById(`checkbox-${i}`)
-        if (checkBoxItem) {
-          if (checkBoxItem.checked === false) {checkBoxItem.click()}
-        }
-      i ++
+      const checkBoxItem = document.getElementById(`checkbox-${i}`);
+      if (checkBoxItem && !checkBoxItem.checked) checkBoxItem.click();
+      i++
     }
   }
-  // desmarca todos
+
+  // Uncheck all items
   if (checkBox.checked === false) {
     while (i <= idCount) {
-      const checkBoxItem = document.getElementById(`checkbox-${i}`)
-        if (checkBoxItem) {
-          if (checkBoxItem.checked === true) {checkBoxItem.click()}
-        }
-      i ++
+      const checkBoxItem = document.getElementById(`checkbox-${i}`);
+      if (checkBoxItem && checkBoxItem.checked) checkBoxItem.click();
+      i++
     }
   }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// delete all checklist 
+// ==================== CLEAR ALL CHECKLIST ====================
 function clearAll() {
-  // se existir algim modal anterior ele apaga
-  const oldModal = document.getElementById('dynamicModal')
-  if (oldModal) oldModal.remove()
+  // Remove previous modal if exists
+  const oldModal = document.getElementById('dynamicModal');
+  if (oldModal) oldModal.remove();
 
-  // cria modal dinamicamente com o click
+  // Dynamic modal HTML
   const modalHtml = `
   <div class="modal fade" id="dynamicModalAll" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Quer apagar toda sua lista?</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+          <h5 class="modal-title">Do you want to delete your entire list?</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn" data-bs-dismiss="modal">Cancelar</button>
-          <button type="button" class="btn btn-primary" id="RemoveItemBtnAll">Apagar</button>
+          <button type="button" class="btn" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary" id="RemoveItemBtnAll">Delete</button>
         </div>
       </div>
     </div>
   </div>
   `
 
-  // adiciona no body
+  // Append modal to body
   document.body.insertAdjacentHTML('beforeend', modalHtml)
 
-  // pega o modal criado
+  // Get modal element and initialize Bootstrap modal
   const modalEl = document.getElementById('dynamicModalAll')
   const modal = new bootstrap.Modal(modalEl)
 
-  // adiciona evento no botão apagar
+  // Delete all button event
   modalEl.querySelector('#RemoveItemBtnAll').addEventListener('click', () => {
-    // remove o checklist
     modal.hide()
 
-    // apagando todos os itens do checklist
+    // Remove all checklist items
     let i = 0
     while (i <= idCount) {
-      const elmetnById = document.getElementById(`itemId-${i}`)
-      if (elmetnById) {
-        elmetnById.remove()
-      }
-
-      // increment
-      i ++
+      const elmetnById = document.getElementById(`itemId-${i}`);
+      if (elmetnById) elmetnById.remove();
+      i++
     }
-    // resetando o idcount
+
+    // Reset ID counter
     idCount = 0
 
-    // validaçoes
+    // Reset validations
     resetItensCount()
     resetCountComplet()
     checkHasIten()
     hasContent()
   })
 
-  // abre o modal
+  // Show modal
   modal.show()
 }
