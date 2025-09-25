@@ -58,7 +58,7 @@ body {
 
 main {
   max-width: 620px;
-  margin: auto;
+  margin: 0 auto 100px;
 }
 
 form {
