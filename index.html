@@ -56,13 +56,22 @@
     <!-- check list -->
     <div class="mb-4">
       <h2 class="funnel-display-bold text-center">CheckList</h2>
+      <div class="d-flex justify-content-between align-items-center px-5">
+        <label class="d-flex btn label-forCheck align-items-center gap-3" onclick="checkAll()">
+          <input class="form-check-input mt-0" type="checkbox" id="checkAllItem">
+          Marcar todos.
+        </label>
+        <div>
+          <button type="button" class="btn btn-clearAll d-flex align-items-center gap-3" onclick="clearAll()">Apagar tudo<i class="bi bi-trash3"></i></button>
+        </div>
+      </div>
     </div>
     <div id="checklist"></div>
   </main>
 
   <!-- Controlers - add item -->
   <footer class="functional-area fixed-bottom p-4 m-2 rounded-3">
-    <form class="d-flex justify-content-between align-items-center">
+    <form class="d-flex justify-content-between align-items-center" autocomplete="off">
       <div class="input-group">
         <input type="text" class="form-control" id="input-item" placeholder="Adcione um item ...">
         <button type="button" class="btn btn-outline-secondary" onclick="addItem()"><i class="bi bi-plus-circle-dotted"></i></button>

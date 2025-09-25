@@ -91,3 +91,8 @@ function completeTask(element, group) {
     updateBars(group)
   }
 }
+
+
+function resetCountComplet() {
+  countCompletForGroup = [0, 0, 0, 0, 0]
+}

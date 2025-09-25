@@ -2,8 +2,7 @@
 const arrayProgressBar = document.querySelectorAll('.progress')
 
 // itens by group
-let itensGroupByClassName = []
-
+let itensGroupByClassName = [0, 0, 0, 0, 0]
 
 
 // update progressbar functions
@@ -66,4 +65,9 @@ function checkHasIten() {
       arrayProgressBar[num].style.display = "flex"
     }
   })
+}
+
+
+function resetItensCount() {
+  itensGroupByClassName = [0, 0, 0, 0, 0]
 }

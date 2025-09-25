@@ -58,6 +58,15 @@ body {
   background-color: var(--gray-200);
 }
 
+main {
+  max-width: 620px;
+  margin: auto;
+}
+
+form {
+  max-width: 780px;
+  margin: auto;
+}
 
 h2 {
   font-size: 1.2em;
@@ -186,3 +195,11 @@ h2 {
 .modal-header, .modal-footer {
   border: none;
 }
+
+
+
+.btn-clearAll, .label-forCheck {
+  color: var(--white);
+}
+
+

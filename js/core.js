@@ -1,6 +1,6 @@
 // vars
 // group vars - classes
-const groups = ['group1', 'group2', 'group3', 'group4', 'group5',]
+const groups = ['group1', 'group2', 'group3', 'group4', 'group5']
 // group atual
 let actualGroup = 0
 // input listener var
@@ -32,7 +32,7 @@ function removeTaskCheck(itemId, group, checkbox) {
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Quer apagar esse item ?</h5>
+          <h5 class="modal-title">Quer apagar esse item?</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
         </div>
         <div class="modal-footer">
@@ -66,8 +66,6 @@ function removeTaskCheck(itemId, group, checkbox) {
     const elmentCheckList = document.getElementById(`${itemId}`)
     if (elmentCheckList) {
       elmentCheckList.remove()
-      // vvisualElement is unique item ??
-
     }
 
     checkHasIten()
@@ -171,3 +169,122 @@ document.addEventListener("DOMContentLoaded", () => {
   checkHasIten()
   hasContent()
 })
+
+
+
+// check all itens in checklist
+function checkAll() {
+  // checkbox-${idCount}
+  const checkBox = document.getElementById('checkAllItem')
+  let i = 0
+
+  // marca todos
+  if (checkBox.checked === true) {
+    while (i <= idCount) {
+      const checkBoxItem = document.getElementById(`checkbox-${i}`)
+        if (checkBoxItem) {
+          if (checkBoxItem.checked === false) {checkBoxItem.click()}
+        }
+      i ++
+    }
+  }
+  // desmarca todos
+  if (checkBox.checked === false) {
+    while (i <= idCount) {
+      const checkBoxItem = document.getElementById(`checkbox-${i}`)
+        if (checkBoxItem) {
+          if (checkBoxItem.checked === true) {checkBoxItem.click()}
+        }
+      i ++
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// delete all checklist 
+function clearAll() {
+  // se existir algim modal anterior ele apaga
+  const oldModal = document.getElementById('dynamicModal')
+  if (oldModal) oldModal.remove()
+
+  // cria modal dinamicamente com o click
+  const modalHtml = `
+  <div class="modal fade" id="dynamicModalAll" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Quer apagar toda sua lista?</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary" id="RemoveItemBtnAll">Apagar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  `
+
+  // adiciona no body
+  document.body.insertAdjacentHTML('beforeend', modalHtml)
+
+  // pega o modal criado
+  const modalEl = document.getElementById('dynamicModalAll')
+  const modal = new bootstrap.Modal(modalEl)
+
+  // adiciona evento no botão apagar
+  modalEl.querySelector('#RemoveItemBtnAll').addEventListener('click', () => {
+    // remove o checklist
+    modal.hide()
+
+    // apagando todos os itens do checklist
+    let i = 0
+    while (i <= idCount) {
+      const elmetnById = document.getElementById(`itemId-${i}`)
+      if (elmetnById) {
+        elmetnById.remove()
+      }
+
+      // increment
+      i ++
+    }
+    // resetando o idcount
+    idCount = 0
+
+    // validaçoes
+    resetItensCount()
+    resetCountComplet()
+    checkHasIten()
+    hasContent()
+  })
+
+  // abre o modal
+  modal.show()
+}
