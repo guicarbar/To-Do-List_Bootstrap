@@ -7,18 +7,26 @@ let actualGroup = 0
 const input = document.getElementById('input-item')
 // ID counter for checklist items
 let idCount = 0
+// next group fot tab
+let nextgroup = 0
 // Checklist container
 const checkListArea = document.getElementById('checklist')
-
+const indicator = this.document.getElementById('groupIndicator')
 
 // ==================== FUNCTIONS ====================
 // ---------- Change Group ----------
 function changeGruop(group) {
+  // removenoid indicador antigo
+  indicator.classList.remove(`${groups[actualGroup]}`)
+  // mudanod o grupo atual
   actualGroup = group - 1
+  nextgroup = group
+  // trocando o indicador
+  indicator.classList.add(`${groups[actualGroup]}`)
   console.log(`Items will be added to group: ${groups[actualGroup]}`)
 }
 
-// ---------- Remove Task (with dynamic modal) ----------
+// ---------- Remove Task ----------
 function removeTaskCheck(itemId, group, checkbox) {
   // Remove previous modal if exists
   const oldModal = document.getElementById('dynamicModal')
@@ -153,7 +161,20 @@ document.addEventListener("DOMContentLoaded", () => {
   hasContent()
 })
 
-// ---------- Check / Uncheck All Items ----------
+// trocar a de grupo com ArrowDown
+document.addEventListener("keydown", function(event) {
+  if (event.key === "ArrowDown") {
+    nextgroup ++
+    if (nextgroup > 4) {
+      nextgroup = 1
+    } else {
+    }
+    changeGruop(nextgroup)
+  }
+})
+
+
+//==================== Check / Uncheck All Items ====================
 function checkAll() {
   const checkBox = document.getElementById('checkAllItem');
   let i = 0
@@ -201,6 +222,7 @@ function clearAll() {
   </div>
   `
 
+
   // Append modal to body
   document.body.insertAdjacentHTML('beforeend', modalHtml)
 
@@ -215,8 +237,8 @@ function clearAll() {
     // Remove all checklist items
     let i = 0
     while (i <= idCount) {
-      const elmetnById = document.getElementById(`itemId-${i}`);
-      if (elmetnById) elmetnById.remove();
+      const elmetnById = document.getElementById(`itemId-${i}`)
+      if (elmetnById) elmetnById.remove()
       i++
     }
 
@@ -233,3 +255,9 @@ function clearAll() {
   // Show modal
   modal.show()
 }
+
+
+// carrega cor inicial do indicador de grupo
+window.addEventListener("load", function() {
+  indicator.classList.add(`${groups[actualGroup]}`)
+})

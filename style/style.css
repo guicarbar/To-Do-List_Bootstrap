@@ -161,3 +161,23 @@ h2 {
 .modal-footer {
   border: none;
 }
+
+
+/* ==================== MODAL - colors ==================== */
+.colorGroupIndicator {
+  width: 32px;
+  height: 32px;
+}
+
+.dropitem {
+  color: var(--gray-100);
+  transition: 0.3s ease;
+}
+
+.coloGroup1 {background-color: var(--color-blue);}
+.coloGroup2 {background-color: var(--color-red);}
+.coloGroup3 {background-color: var(--color-purple);}
+.coloGroup4 {background-color: var(--color-green);}
+.coloGroup5 {background-color: var(--color-yellow);}
+
+.dropitem:hover {color: var(--black);}

@@ -88,6 +88,7 @@
   <!-- ==================== FOOTER: ADD ITEM CONTROLS ==================== -->
   <footer class="functional-area fixed-bottom p-4 m-2 rounded-3">
     <form class="d-flex justify-content-between align-items-center" autocomplete="off">
+      <div class="colorGroupIndicator rounded-circle me-3" id="groupIndicator"></div>
       <div class="input-group">
         <!-- Input Field -->
         <input type="text" class="form-control" id="input-item" placeholder="Add an item ...">
@@ -104,11 +105,11 @@
 
         <!-- Dropdown Menu -->
         <ul class="dropdown-menu dropdown-menu-end bg-secondary">
-          <li class="dropdown-item" onclick="changeGruop(1)">Group 1</li>
-          <li class="dropdown-item" onclick="changeGruop(2)">Group 2</li>
-          <li class="dropdown-item" onclick="changeGruop(3)">Group 3</li>
-          <li class="dropdown-item" onclick="changeGruop(4)">Group 4</li>
-          <li class="dropdown-item" onclick="changeGruop(5)">Group 5</li>
+          <li class="dropitem ps-3 mb-1 coloGroup1" onclick="changeGruop(1)">Group 1</li>
+          <li class="dropitem ps-3 mb-1 coloGroup2" onclick="changeGruop(2)">Group 2</li>
+          <li class="dropitem ps-3 mb-1 coloGroup3" onclick="changeGruop(3)">Group 3</li>
+          <li class="dropitem ps-3 mb-1 coloGroup4" onclick="changeGruop(4)">Group 4</li>
+          <li class="dropitem ps-3 coloGroup5" onclick="changeGruop(5)">Group 5</li>
         </ul>
       </div>
     </form>
